@@ -1,0 +1,33 @@
+name: Bot Binance Serverless
+
+on:
+  schedule:
+    # Se ejecuta automáticamente cada 1 hora. 
+    # Puedes cambiarlo a '*/30 * * * *' si quieres cada 30 minutos.
+    - cron: '0 * * * *'
+  workflow_dispatch: # Permite ejecutar el bot de forma manual con un botón en GitHub
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Instalar librerías necesarias
+        run: |
+          pip install --upgrade pip
+          pip install ccxt pandas pandas-ta
+
+      - name: Ejecutar Bot
+        env:
+          BINANCE_API_KEY: ${{ secrets.BINANCE_API_KEY }}
+          BINANCE_SECRET_KEY: ${{ secrets.BINANCE_SECRET_KEY }}
+        run: |
+          python bot.py
+          
