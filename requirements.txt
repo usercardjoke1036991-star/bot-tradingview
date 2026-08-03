@@ -1,4 +1,4 @@
-Flask
 ccxt
-python-dotenv
-gunicorn
+pandas
+git+https://github.com/twopirllc/pandas-ta.git
+
